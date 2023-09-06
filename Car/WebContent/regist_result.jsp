@@ -33,19 +33,19 @@ th:nth-child(1) {
 		<tbody>
 			<tr>
 				<td>자동차등록번호</td>
-				<td><%=request.getParameter("VIN")%></td>
+				<td><%=request.getAttribute("VIN")%></td>
 			</tr>
 			<tr>
 				<td>모델 명</td>
-				<td><%=request.getParameter("modelName")%></td>
+				<td><%=request.getAttribute("modelName")%></td>
 			</tr>
 			<tr>
 				<td>색상</td>
-				<td><%=request.getParameter("color")%></td>
+				<td><%=request.getAttribute("color")%></td>
 			</tr>
 			<tr>
 				<td>주행 거리</td>
-				<td><%=request.getParameter("mileage")%></td>
+				<td><%=request.getAttribute("mileage")%></td>
 			</tr>
 		</tbody>
 	</table>
