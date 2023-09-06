@@ -2,13 +2,12 @@ package com.ssafy.ws.step1.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.ssafy.ws.step1.dto.Car;
 
 //이 서블릿이 호출되기 위해서는 url 상에 http://server_ip:port/context_name/main 이 필요하다.
 @WebServlet("/main")
@@ -53,9 +52,9 @@ public class MainServlet extends HttpServlet {
 	}
 	
     /**
-     * 자동차 정보를 등록하기 위해 파라미터가 잘 전달되는지 확인하고 전달 결과를 화면에 출력한다.
-     * 이를 위해 request 전달 받은 내용을 추출해서 Car 객체를 생성한 후 response 출력한다.
-     * 특히 response 시 content의 형식에 주의한다.
+     * 클라이언트에서 전달된 request를 분석한 결과를 regist_result.jsp에서 볼 수 있도록 한다.
+     * RequestDispatcher를 사용해서 regist_result.jsp로 forward한다.
+     * 
      * @param request
      * @param response
      * @throws ServletException
@@ -70,17 +69,16 @@ public class MainServlet extends HttpServlet {
 		// 문자열로 전달된 mileage는 숫자로 변환
 		int mileage = Integer.parseInt(request.getParameter("mileage"));
 		
-		// 전달받은 parameter를 이용해서 Car 객체를 생성한다. 
-		Car car = new Car(VIN, modelName, color, mileage);
+		// 전달받은 파라미터를 request에 담는다.
+		request.setAttribute("VIN", VIN);
+		request.setAttribute("modelName", modelName);
+		request.setAttribute("color", color);
+		request.setAttribute("mileage", mileage);
 		
-		// 화면에 출력할 데이터를 구성한다. 
-		StringBuilder output = new StringBuilder();
-		
-		output.append("<html><body>").append("<h1>자동차 정보</h1>").append(car.toString()).append("</body></html>");
-		
-		// response 객체를 통해서 생성한 html코드를 출력한다.
-		response.setContentType("text/html; charset=UTF-8");
-		response.getWriter().write(output.toString());
+		// JSP 화면 호출을 위해 RequestDispatcher의 forward를 사용한다.
+		// 이때 연결할 jsp의 이름을 넘겨준다. forward에서는 /는 context root를 나타낸다.
+		RequestDispatcher disp = request.getRequestDispatcher("/regist_result.jsp");
+		disp.forward(request, response);
 		
 	}
 }
