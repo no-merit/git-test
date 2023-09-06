@@ -26,9 +26,9 @@ th:nth-child(1) {
 	<table>
 		<thead>
 			<tr>
-				<th>항목</th>
-				<th>내용</th>
-			</tr>
+				<th>항목</th>  
+				<th>내용</th> 
+			</tr>  
 		</thead>
 		<tbody>
 			<tr>
