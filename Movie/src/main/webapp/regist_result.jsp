@@ -1,4 +1,6 @@
+<%@page import="javax.swing.text.StyledEditorKit.ForegroundAction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page import="com.ssafy.ws.step2.dto.Movie"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +23,8 @@ th:nth-child(1) {
 </head>
 <body>
 	<h1>영화 결과</h1>
+	<h3>
+		지금까지 등록한 영화 수<%=session.getAttribute("movieCount")%></h3>
 	<h2>등록된 영화 정보</h2>
 	<%-- 테이블 내에서 User의 내용을 출력하기 위해 expression tag를 사용한다. --%>
 	<table>
@@ -30,6 +34,7 @@ th:nth-child(1) {
 				<th>내용</th>
 			</tr>
 		</thead>
+
 		<tbody>
 			<tr>
 				<td>아이디</td>
