@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ssafy.ws.step2.dto.Movie;
 
@@ -17,7 +18,7 @@ public class MainServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	
+	static int  movieCount =0;
     /**
      * get 방식의 요청에 대해 응답하는 메서드이다.
      * front controller pattern을 적용하기 위해 내부적으로 process를 호출한다.
@@ -50,6 +51,7 @@ public class MainServlet extends HttpServlet {
 		case "regist":
 			doRegist(request, response);
 			break;
+	
 		}
 	}
 	
@@ -71,11 +73,12 @@ public class MainServlet extends HttpServlet {
 		int id = 1;
 		// 문자열로 전달된 mileage는 숫자로 변환
 		int runningtime = Integer.parseInt(request.getParameter("runningtime"));
-		
+		HttpSession session = request.getSession();
 		// 전달받은 parameter를 이용해서 Car 객체를 생성한다. 
 		Movie movie = new Movie(id++, title, director, genre, runningtime);
-		
+		session.setAttribute("movieCount", ++movieCount);
 		// 화면에 출력할 데이터를 구성한다. 
+		request.setAttribute("movieCount", movieCount);
 		request.setAttribute("id", id);
 		request.setAttribute("title", title);
 		request.setAttribute("director", director);
