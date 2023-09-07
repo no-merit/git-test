@@ -14,6 +14,7 @@
 </head>
 <body>
 	<h1>영화 관리</h1>
+    <h3>지금까지 등록한 영화 수<%=session.getAttribute("movieCount") %></h3>
 	<form method="post" action="main">
 		<fieldset>
 		<legend>사용자 정보 입력</legend>
