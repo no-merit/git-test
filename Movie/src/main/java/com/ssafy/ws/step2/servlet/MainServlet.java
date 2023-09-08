@@ -1,6 +1,7 @@
 package com.ssafy.ws.step2.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ public class MainServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	static int  movieCount =0;
+	static ArrayList<Movie> movieList = new ArrayList<>();
     /**
      * get 방식의 요청에 대해 응답하는 메서드이다.
      * front controller pattern을 적용하기 위해 내부적으로 process를 호출한다.
@@ -51,11 +52,17 @@ public class MainServlet extends HttpServlet {
 		case "regist":
 			doRegist(request, response);
 			break;
+		case "list":
+			doList(request, response);
+			break;
+			
 	
 		}
 	}
 	
-    /**
+
+
+	/**
      * 자동차 정보를 등록하기 위해 파라미터가 잘 전달되는지 확인하고 전달 결과를 화면에 출력한다.
      * 이를 위해 request 전달 받은 내용을 추출해서 Car 객체를 생성한 후 response 출력한다.
      * 특히 response 시 content의 형식에 주의한다.
@@ -73,19 +80,26 @@ public class MainServlet extends HttpServlet {
 		int id = 1;
 		// 문자열로 전달된 mileage는 숫자로 변환
 		int runningtime = Integer.parseInt(request.getParameter("runningtime"));
-		HttpSession session = request.getSession();
+	
 		// 전달받은 parameter를 이용해서 Car 객체를 생성한다. 
 		Movie movie = new Movie(id++, title, director, genre, runningtime);
-		session.setAttribute("movieCount", ++movieCount);
+		
+		movieList.add(movie);
 		// 화면에 출력할 데이터를 구성한다. 
-		request.setAttribute("movieCount", movieCount);
-		request.setAttribute("id", id);
-		request.setAttribute("title", title);
-		request.setAttribute("director", director);
-		request.setAttribute("genre", genre);
-		request.setAttribute("runningtime", runningtime);
+		
+		request.setAttribute("movie", movie);
+		
 		
 		RequestDispatcher disp = request.getRequestDispatcher("/regist_result.jsp");
 		disp.forward(request, response);
 	}
+	private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		// TODO Auto-generated method stub
+		request.setAttribute("movies", movieList);
+		request.setAttribute("movieCount", movieList.size());
+		
+		RequestDispatcher disp = request.getRequestDispatcher("/list.jsp");
+		disp.forward(request, response);
+	}
+	
 }
