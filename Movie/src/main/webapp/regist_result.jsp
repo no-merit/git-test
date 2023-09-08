@@ -1,6 +1,7 @@
 <%@page import="javax.swing.text.StyledEditorKit.ForegroundAction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ page import="com.ssafy.ws.step2.dto.Movie"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,9 +23,8 @@ th:nth-child(1) {
 </style>
 </head>
 <body>
-	<h1>영화 결과</h1>
-	<h3>
-		지금까지 등록한 영화 수<%=session.getAttribute("movieCount")%></h3>
+	<h1>영화 등록 결과</h1>
+	
 	<h2>등록된 영화 정보</h2>
 	<%-- 테이블 내에서 User의 내용을 출력하기 위해 expression tag를 사용한다. --%>
 	<table>
@@ -38,27 +38,28 @@ th:nth-child(1) {
 		<tbody>
 			<tr>
 				<td>아이디</td>
-				<td><%=request.getAttribute("id")%></td>
+				<td>${requestScope.movie.id }</td>
 			</tr>
 			<tr>
 				<td>영화제목</td>
-				<td><%=request.getAttribute("title")%></td>
+				<td>${requestScope.movie.title} </td>
 			</tr>
 			<tr>
 				<td>감독</td>
-				<td><%=request.getAttribute("director")%></td>
+				<td>${requestScope.movie.director} </td>
 			</tr>
 			<tr>
 				<td>장르</td>
-				<td><%=request.getAttribute("genre")%></td>
+				<td>${requestScope.movie.genre} </td>
 			</tr>
 			<tr>
 				<td>상영시간</td>
-				<td><%=request.getAttribute("runningtime")%></td>
+				<td>${requestScope.movie.running} </td>
 			</tr>
 		</tbody>
 	</table>
 	<!-- 다시 사용자를 등록할 수 있는 링크를 제공한다. -->
 	<a href="regist.jsp">추가등록</a>
+	<a href="main?action=list">영화 목록</a>
 </body>
 </html>
